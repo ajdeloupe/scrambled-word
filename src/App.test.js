@@ -10,7 +10,7 @@ let words = ['hello', 'goodbye', 'tomorrow', 'whatever', 'confusion', 'cerebral'
 
 let state = {
     words: words,
-    currentWord: sample(words),
+    currentWord: "hello",
     answer: ''
 }
 describe("Testing Scrambled Word Game", () => {
@@ -49,4 +49,26 @@ describe("Testing Scrambled Word Game", () => {
       expect(wrapper.find('input.gameInput').props().style.backgroundColor).toBe('green');
     })
   });
+  describe("when the user selects their first letter", ()=>{
+    let wrapper;
+    //set handleAnswerSelected to a jest dummy function so we can get information on what is passed to the function
+    const handleAnswerSelected = jest.fn();
+    beforeAll(()=>{
+      wrapper= mount(<ScrambledWord {...state} onAnswerComplete={handleAnswerSelected} onNewGame={() => {}} />);
+      //simulate a click event on the first book title
+      wrapper.find('.letter').first().simulate('click');
+      wrapper.find('.letter').first().simulate('click');
+      wrapper.find('.letter').first().simulate('click');
+      wrapper.find('.letter').first().simulate('click');
+      wrapper.find('.letter').first().simulate('click');
+    });
+    it("should trigger checkAnswer", ()=>{
+      //check if the function was called
+      expect(handleAnswerSelected).toHaveBeenCalled();
+    });
+    it("should receive a string", ()=>{
+      //check whether it was passed a string.
+      expect(handleAnswerSelected).toHaveBeenCalledWith(expect.any(String));
+    })
+  })
 });

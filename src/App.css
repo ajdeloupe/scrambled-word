@@ -17,7 +17,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-.game{
+.game,.Add-words{
   padding: 80px 150px;
   
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import {shuffle} from 'underscore';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 //using a Class component here because we want to use local state to hold the current state of the game.  This is a stateful component
 class Game extends Component {
@@ -137,6 +138,7 @@ function ScrambledWord({words, currentWord, answer, onNewGame, onAnswerComplete}
     </header>
     <Game word={currentWord} answer={answer} onAnswerComplete={onAnswerComplete} />
     <NewGameBtn onNewGame={onNewGame} />
+    <p><Link to="/add">Add words to game</Link></p>
     <footer><p>Game by Adriane</p></footer>
   </div>
 }
