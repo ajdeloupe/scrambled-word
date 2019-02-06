@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import {connect} from 'react-redux';
 import {shuffle} from 'underscore';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
@@ -129,7 +130,23 @@ Letters.propTypes = {
 function NewGameBtn ({onNewGame}) {
   return <input type="button" value="New Game" onClick={onNewGame} />
 }
-function ScrambledWord({words, currentWord, answer, onNewGame, onAnswerComplete}) {
+function mapStateToProps(state) {
+  return {
+    currentWord: state.currentWord,
+    answer: state.answer
+  }
+}
+function mapDispatchToProps(dispatch ) {
+  return {
+    onNewGame: () => {
+      dispatch({type: 'CONTINUE'})
+    },
+    onAnswerComplete: (answer) => {
+      dispatch({type: 'ANSWER_SELECTED', answer })
+    }
+  }
+}
+const ScrambledWord = connect(mapStateToProps, mapDispatchToProps)(function({ currentWord, answer, onNewGame, onAnswerComplete}) {
   
   return <div className="App">
     <header className="App-header">
@@ -141,7 +158,7 @@ function ScrambledWord({words, currentWord, answer, onNewGame, onAnswerComplete}
     <p><Link to="/add">Add words to game</Link></p>
     <footer><p>Game by Adriane</p></footer>
   </div>
-}
+})
 ScrambledWord.propTypes = {
   word: PropTypes.arrayOf(PropTypes.string),
   currentWord: PropTypes.string.isRequired,
